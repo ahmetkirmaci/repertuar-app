@@ -1,6 +1,7 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { SongsService } from './songs.service';
 import { CreateSongDto } from './dto/create-song.dto';
+import { UpdateSongDto } from './dto/update-song.dto';
 
 @Controller('songs')
 export class SongsController {
@@ -14,5 +15,15 @@ export class SongsController {
     @Get()
     findAll() {
         return this.songsService.findAll();
+    }
+
+    @Patch(':id')
+    update(@Param('id') id: string, @Body() updateSongDto: UpdateSongDto) {
+        return this.songsService.update(id, updateSongDto);
+    }
+
+    @Delete(':id')
+    remove(@Param('id') id: string) {
+        return this.songsService.remove(id);
     }
 }
